@@ -21,21 +21,20 @@ class User extends REST_Controller
 		}
 	}
 	public function add_user_post()
-	{
-		$password = $this->password_hash($this->input->post('password'));
-		$matrecule=$this->input->post('matricule');
-		$data = array(
-			'password' => $password,
-			'matricule' => $matrecule,
-			'nom' => $this->input->post('nom'),
-			'prenom' =>$this->input->post('prenom'),
-			'tel' => $this->input->post('tel'),
-			'email' =>  $this->input->post('email'),
-			'type'=>"0",
-			'statut'=>"0",
-		);
-		echo $this->Model_user->check_matrecule($matrecule);
-		if($this->Model_user->check_matrecule($matrecule)===true){
+{
+	$password = $this->password_hash($this->input->post('password'));
+	$matrecule=$this->input->post('matricule');
+	$data = array(
+		'password' => $password,
+		'matricule' => $matrecule,
+		'nom_prnom' => $this->input->post('nom_prnom'),
+		'tel' => $this->input->post('tel'),
+		'email' =>  $this->input->post('email'),
+		'type'=>"0",
+		'statut'=>"0",
+	);
+
+	if($this->Model_user->check_matrecule($matrecule)===true){
 		$create = $this->Model_user->add_user($data);
 		if($create)
 		{
@@ -54,18 +53,19 @@ class User extends REST_Controller
 			);
 			$this->response($res, REST_Controller::HTTP_OK);
 		}
-		}
-		else
-		{
-			$res= array(
-				'erorer' => true,
-				'msg' =>"Matricule Existe Déjà "
-			);
-			$this->response($res, REST_Controller::HTTP_OK);
-		}
 	}
+	else
+	{
+		$res= array(
+			'erorer' => true,
+			'msg' =>"Matricule Existe Déjà "
+		);
+		$this->response($res, REST_Controller::HTTP_OK);
+	}
+}
 	public function login_get()
 	{
+
 		$email=$this->input->get('email', TRUE);
 		$pass=$this->input->get('password', TRUE);
 
@@ -85,38 +85,6 @@ class User extends REST_Controller
 			$res= array(
 				'erorer' => true,
 				'msg' =>"Verifier Votre Adresse Email Et/Ou Votre Mot De Passe"
-			);
-			$this->response($res, REST_Controller::HTTP_OK);
-		}
-	}
-	public function update_user_post()
-	{
-		$password = $this->password_hash($this->input->post('password'));
-		$data = array(
-			'password' => $password,
-			'matricule' => $this->input->post('matricule'),
-			'nom' => $this->input->post('nom'),
-			'prenom' =>$this->input->post('prenom'),
-			'tel' => $this->input->post('tel'),
-			'email' =>  $this->input->post('email'),
-			'type'=>"0",
-			'statut'=>"0",
-		);
-		$create = $this->Model_user->update_user_bay_id($this->input->post('id',true),$data);
-		if($create)
-		{
-			$res = array
-			(
-				'erorer' => false,
-				'msg' => "Modification avec succès"
-			);
-			$this->response($res, REST_Controller::HTTP_OK);
-		}
-		else
-		{
-			$res= array(
-				'erorer' => true,
-				'msg' =>"Modification n'a pas réussi"
 			);
 			$this->response($res, REST_Controller::HTTP_OK);
 		}
@@ -143,6 +111,37 @@ class User extends REST_Controller
 		}
 
 
+	}
+	public function update_user_post()
+	{
+		$password = $this->password_hash($this->input->post('password'));
+		$data = array(
+			'password' => $password,
+			'matricule' => $this->input->post('matricule'),
+			'nom_prnom' => $this->input->post('nom_prnom'),
+			'tel' => $this->input->post('tel'),
+			'email' =>  $this->input->post('email'),
+			'type'=>"0",
+			'statut'=>"0",
+		);
+		$create = $this->Model_user->update_user_bay_id($this->input->post('id',true),$data);
+		if($create)
+		{
+			$res = array
+			(
+				'erorer' => false,
+				'msg' => "Modification avec succès"
+			);
+			$this->response($res, REST_Controller::HTTP_OK);
+		}
+		else
+		{
+			$res= array(
+				'erorer' => true,
+				'msg' =>"Modification n'a pas réussi"
+			);
+			$this->response($res, REST_Controller::HTTP_OK);
+		}
 	}
 	public function get_all_user_Get(){
 
@@ -192,28 +191,6 @@ class User extends REST_Controller
 
 		}
 	}
-	public function resset_passwored_post()
-	{
-		$password = $this->password_hash($this->input->post('newpass'));
-		$rest_pass=$this->Model_user->reset_passwored($this->input->post('matrcule', TRUE),$password);
-		if($rest_pass)
-		{
-			$res = array
-			(
-				'erorer' => false,
-				'msg' => "Modification Du Mot De Passe Avec Succès"
-			);
-			$this->response($res, REST_Controller::HTTP_OK);
-		}
-		else
-		{
-			$res= array(
-				'erorer' => true,
-				'msg' =>"Modification Du Mot De Passe n'a pas réussi"
-			);
-			$this->response($res, REST_Controller::HTTP_OK);
-		}
-	}
 	public function delete_user_post()
 	{
 		$id=$this->input->post('id', TRUE);
@@ -237,5 +214,26 @@ class User extends REST_Controller
 		}
 
 	}
-
+	public function resset_passwored_post()
+	{
+		$password = $this->password_hash($this->input->post('newpass'));
+		$rest_pass=$this->Model_user->reset_passwored($this->input->post('matrcule', TRUE),$password);
+		if($rest_pass)
+		{
+			$res = array
+			(
+				'erorer' => false,
+				'msg' => "Modification Du Mot De Passe Avec Succès"
+			);
+			$this->response($res, REST_Controller::HTTP_OK);
+		}
+		else
+		{
+			$res= array(
+				'erorer' => true,
+				'msg' =>"Modification Du Mot De Passe n'a pas réussi"
+			);
+			$this->response($res, REST_Controller::HTTP_OK);
+		}
+	}
 }

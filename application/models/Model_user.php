@@ -48,12 +48,6 @@ class Model_user extends CI_Model
 			return false;
 		}
 	}
-	public function active_user($id)
-	{
-		$this->db->where('id_user ',$id);
-		$this->db->set('statut','1',FALSE);
-		return $this->db->update('users');
-	}
 	public function get_user($id=null)
 	{
 		if($id)
@@ -72,6 +66,15 @@ class Model_user extends CI_Model
 		$query=$this->db->get();
 		return $resulta = $query->result_array();
 	}
+	public function delete_user($id){
+		$this->db->where('id_user', $id);
+		$this->db->delete('users');
+		if ($this->db->affected_rows() > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	public function reset_passwored($matrcule,$newpass)
 	{
 		$sql="UPDATE users SET users.password= '".$newpass."' WHERE matricule ='".$matrcule."'";
@@ -83,23 +86,12 @@ class Model_user extends CI_Model
 			return false;
 		}
 	}
-	public function delete_user($id){
-		$this->db->where('id_user', $id);
-		$this->db->delete('users');
-		if ($this->db->affected_rows() > 0) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	public function get_voture_user($id)
+	public function active_user($id)
 	{
-		$sql="select * FROM users u join affectaion_voture_user af JOIN voiture v on af.id_ueser=u.id_user AND af.id_voiture=v.id_voiture WHERE u.id_user=".$id;
-		$query = $this->db->query($sql);
-		return $query->result_array();
-
+		$this->db->where('id_user ',$id);
+		$this->db->set('statut','1',FALSE);
+		return $this->db->update('users');
 	}
-
 
 
 
