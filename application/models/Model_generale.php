@@ -6,43 +6,102 @@ class Model_generale extends CI_Model
 	public function __construct()
 	{
 	}
-
-	public function add_tab($data,$tab)
+	public function reset_passwored($matrcule,$newpass,$nomtab,$email)
 	{
-		$status = $this->db->insert($tab, $data);
-		return($this->db->affected_rows() != 1) ? false : true;
-	}
-	public function update_tab_bay_id($nom_id,$id,$data,$tab)
-	{
-		$this->db->where($nom_id, $id);
-		$this->db->update($tab, $data);
+		$sql="UPDATE ".$nomtab." SET ".$nomtab.".password= '".$newpass."' WHERE matricule ='".$matrcule."' and ".$nomtab.".email = ".$email;
+		$query = $this->db->query($sql);
 		if ($this->db->affected_rows() > 0) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-	public function get_tab_one_all($id,$tab,$nom_id)
+	public function supprimer($id,$tab,$nomId)
 	{
-		if($id)
-		{
-			$this->db->select("*");
-			$this->db->from($tab);
-			$this->db->where($nom_id,$id);
+		$this->db->where($nomId,$id);
+		$this->db->set('statut','1',FALSE);
+		return $this->db->update($tab);
+	}
+	public function delete_fn($id,$tab,$nomIab){
+		$this->db->where($nomIab, $id);
+		$this->db->delete($tab);
+		if ($this->db->affected_rows() > 0) {
+			return true;
+		} else {
+			return false;
 		}
-		else
+	}
+	public function get_fn_active($id=null,$tabnam,$idname=null)
+	{
+		$this->db->select("*");
+		$this->db->from($tabnam);
+		if($id && $idname)
 		{
-			$this->db->select("*");
-			$this->db->from($tab);
-
+			$this->db->where($idname,$id);
 		}
-
+		$this->db->where('statut ','1');
 		$query=$this->db->get();
 		return $resulta = $query->result_array();
 	}
-	public function delete_voiture($id,$nom_id,$tab){
-		$this->db->where($nom_id, $id);
-		$this->db->delete($tab);
+	public function get_fn_Not_active($id=null,$tabnam,$idname=null)
+	{
+		$this->db->select("*");
+		$this->db->from($tabnam);
+		if($id && $idname)
+		{
+			$this->db->where($idname,$id);
+		}
+		$this->db->where('statut ','0');
+		$query=$this->db->get();
+		return $resulta = $query->result_array();
+	}
+	public function get_fn_Generale($id=null,$tabnam,$idname=null)
+	{
+		$this->db->select("*");
+		$this->db->from($tabnam);
+		if($id && $idname)
+		{
+			$this->db->where($idname,$id);
+		}
+		$query=$this->db->get();
+		return $resulta = $query->result_array();
+	}
+	public function login($email, $password,$tabName) {
+		if($email && $password) {
+			$sql = "SELECT * FROM ".$tabName." WHERE email = ? and ".$tabName.".statut = 1";
+			$query = $this->db->query($sql, array($email));
+			if($query->num_rows() == 1) {
+				$result = $query->row_array();
+				$hash_password = password_verify($password, $result['password']);
+				if($hash_password === true) {
+					return $result;
+				}
+				else {
+					return false;
+				}
+			}
+			else {
+				return false;
+			}
+		}
+	}
+	public function check_matrecule($maty,$name,$tab)
+	{
+		$this->db->select("*");
+		$this->db->from($tab);
+		$this->db->where($name,$maty);
+		$query=$this->db->get();
+		return $query->num_rows()==0;
+	}
+	public function add_fn($data,$tabName)
+	{
+		$status = $this->db->insert($tabName, $data);
+		return($this->db->affected_rows() != 1) ? false : true;
+	}
+	public function update_user_bay_id($id,$nomId,$data,$tab)
+	{
+		$this->db->where($nomId, $id);
+		$this->db->update($tab);
 		if ($this->db->affected_rows() > 0) {
 			return true;
 		} else {

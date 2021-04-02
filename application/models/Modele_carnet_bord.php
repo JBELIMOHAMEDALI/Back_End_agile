@@ -7,45 +7,12 @@ class Modele_carnet_bord extends CI_Model
 	{
 	}
 
-	public function add_carnet_bord($data)
+
+	public function get_carnet_bord_for_user($id)
 	{
-		$status = $this->db->insert('carnet_bord', $data);
-		return($this->db->affected_rows() != 1) ? false : true;
-	}
-	public function update_carnet_bord_bay_id($id,$data)
-	{
-		$this->db->where('id_carnet_bord', $id);
-		$this->db->update('carnet_bord', $data);
-		if ($this->db->affected_rows() > 0) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	public function delete_carnet_bord($id){
-		$this->db->where('id_carnet_bord', $id);
-		$this->db->delete('carnet_bord');
-		if ($this->db->affected_rows() > 0) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	public function get_carnet_bord($id=null)
-	{
-		if($id)
-		{
 			$this->db->select("*");
 			$this->db->from("carnet_bord");
-			$this->db->where("id_carnet_bord",$id);
-		}
-		else
-		{
-			$this->db->select("*");
-			$this->db->from("carnet_bord");
-
-		}
-
+			$this->db->where("id_choufer",$id);
 		$query=$this->db->get();
 		return $resulta = $query->result_array();
 	}
@@ -62,5 +29,7 @@ class Modele_carnet_bord extends CI_Model
 		return $query->result_array();
 
 	}
+	//get affectation
+	//SELECT * FROM carnet_bord WHERE id_choufer=11 ORDER BY carnet_bord.id_carnet_bord DESC LIMIT 1
 
 }
