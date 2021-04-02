@@ -20,7 +20,7 @@ class Chauffeur extends REST_Controller
 			return $password;
 		}
 	}
-	public function add_user_post()
+	public function add_chauffeur_post()
 {
 	$password = $this->password_hash($this->input->post('password'));
 	$matrecule=$this->input->post('matricule');
@@ -63,7 +63,7 @@ class Chauffeur extends REST_Controller
 		$this->response($res, REST_Controller::HTTP_OK);
 	}
 }
-	public function active_user_post()
+	public function active_chauffeur_post()
 	{
 		$act=$this->Model_user->active_user($this->input->post('id',true));
 		if($act)
@@ -86,7 +86,7 @@ class Chauffeur extends REST_Controller
 
 
 	}
-	public function update_user_Profile_post()
+	public function update_chauffeur_Profile_post()
 {
 	$password = $this->password_hash($this->input->post('password'));
 	$data = array(
@@ -116,7 +116,7 @@ class Chauffeur extends REST_Controller
 		$this->response($res, REST_Controller::HTTP_OK);
 	}
 }
-	public function update_user_post()
+	public function update_hauffeur_post()
 	{
 		$password = $this->password_hash($this->input->post('password'));
 		$data = array(
