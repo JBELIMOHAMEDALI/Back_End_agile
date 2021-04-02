@@ -37,7 +37,7 @@ class Voiture extends REST_Controller
 					'erorer' => true,
 					'msg' =>"Inscription n'a pas réussi"
 				);
-				$this->response($res, REST_Controller::HTTP_OK);
+				$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 			}
 
 
@@ -67,7 +67,7 @@ class Voiture extends REST_Controller
 				'erorer' => true,
 				'msg' =>"Modification n'a pas réussi"
 			);
-			$this->response($res, REST_Controller::HTTP_OK);
+			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 		}
 	}
 

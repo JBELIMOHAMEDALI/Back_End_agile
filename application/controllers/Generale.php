@@ -31,7 +31,7 @@ class Generale extends REST_Controller
 				'erorer' => true,
 				'msg' =>"Verifier Votre Adresse Email Et/Ou Votre Mot De Passe"
 			);
-			$this->response($res, REST_Controller::HTTP_OK);
+			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 		}
 	}
 	public function get_all_Act_Get(){
@@ -211,7 +211,7 @@ class Generale extends REST_Controller
 				'erorer' => true,
 				'msg' =>"Suppression n'a pas réussi"
 			);
-			$this->response($res, REST_Controller::HTTP_OK);
+			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 		}
 
 	}
@@ -237,7 +237,7 @@ class Generale extends REST_Controller
 				'erorer' => true,
 				'msg' =>"Modification Du Mot De Passe n'a pas réussi"
 			);
-			$this->response($res, REST_Controller::HTTP_OK);
+			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 		}
 	}
 }

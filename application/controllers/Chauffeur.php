@@ -51,7 +51,7 @@ class Chauffeur extends REST_Controller
 				'erorer' => true,
 				'msg' =>"Inscription n'a pas réussi"
 			);
-			$this->response($res, REST_Controller::HTTP_OK);
+			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 		}
 	}
 	else
@@ -60,7 +60,7 @@ class Chauffeur extends REST_Controller
 			'erorer' => true,
 			'msg' =>"Matricule Existe Déjà "
 		);
-		$this->response($res, REST_Controller::HTTP_OK);
+		$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 	}
 }
 	public function active_chauffeur_post()
@@ -81,7 +81,7 @@ class Chauffeur extends REST_Controller
 				'erorer' => true,
 				'msg' =>"Activation N'a Pas Réussi "
 			);
-			$this->response($res, REST_Controller::HTTP_OK);
+			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 		}
 
 
@@ -105,7 +105,7 @@ class Chauffeur extends REST_Controller
 			'erorer' => false,
 			'msg' => "Modification Du Profile avec succès"
 		);
-		$this->response($res, REST_Controller::HTTP_OK);
+		$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 	}
 	else
 	{
@@ -113,7 +113,7 @@ class Chauffeur extends REST_Controller
 			'erorer' => true,
 			'msg' =>"Modification Du Profile n'a pas réussi"
 		);
-		$this->response($res, REST_Controller::HTTP_OK);
+		$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 	}
 }
 	public function update_hauffeur_post()
@@ -146,7 +146,7 @@ class Chauffeur extends REST_Controller
 				'erorer' => true,
 				'msg' =>"Modification Du Profile n'a pas réussi"
 			);
-			$this->response($res, REST_Controller::HTTP_OK);
+			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 		}
 	}
 
