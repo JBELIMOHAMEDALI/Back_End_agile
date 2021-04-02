@@ -34,14 +34,14 @@ class Chauffeur extends REST_Controller
 		'DNS' =>  $this->input->post('DNS'),
 	);
 
-	if($this->Model_user->check_matrecule($matrecule)===true){
-		$create = $this->Model_user->add_user($data);
+	if($this->Model_generale->check_matrecule($matrecule,"matricule","chauffeur")===true){
+		$create = $this->Model_generale->add_fn($data,"chauffeur");
 		if($create)
 		{
 			$res = array
 			(
 				'erorer' => false,
-				'msg' => "Inscription avec succès"
+				'msg' => "chauffeur Ajouté avec succès"
 			);
 			$this->response($res, REST_Controller::HTTP_OK);
 		}
@@ -49,7 +49,7 @@ class Chauffeur extends REST_Controller
 		{
 			$res= array(
 				'erorer' => true,
-				'msg' =>"Inscription n'a pas réussi"
+				'msg' =>"Ajouté d'un chauffeur n'a pas réussi"
 			);
 			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 		}
@@ -63,60 +63,38 @@ class Chauffeur extends REST_Controller
 		$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 	}
 }
-	public function active_chauffeur_post()
+	public function update_chauffeur_Profile_post()
 	{
-		$act=$this->Model_user->active_user($this->input->post('id',true));
-		if($act)
+		$password = $this->password_hash($this->input->post('password'));
+		$data = array(
+			'password' => $password,
+			'matricule' => $this->input->post('matricule'),
+			'nom_prnom' => $this->input->post('nom_prnom'),
+			'tel' => $this->input->post('tel'),
+			'region' =>  $this->input->post('region'),
+			'DNS' =>  $this->input->post('DNS'),
+		);
+		$id=$this->input->post('id',true);
+		$update = $this->Model_generale->update_fn_bay_id($id,$data,"chauffeur","id_chauffeur");
+		if($update)
 		{
 			$res = array
 			(
 				'erorer' => false,
-				'msg' => "Activation Du Compte Avec Succès"
+				'msg' => "Modification Du Profile avec succès"
 			);
-			$this->response($res, REST_Controller::HTTP_OK);
+			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 		}
 		else
 		{
 			$res= array(
 				'erorer' => true,
-				'msg' =>"Activation N'a Pas Réussi "
+				'msg' =>"Modification Du Profile n'a pas réussi"
 			);
 			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 		}
-
-
 	}
-	public function update_chauffeur_Profile_post()
-{
-	$password = $this->password_hash($this->input->post('password'));
-	$data = array(
-		'password' => $password,
-		'matricule' => $this->input->post('matricule'),
-		'nom_prnom' => $this->input->post('nom_prnom'),
-		'tel' => $this->input->post('tel'),
-		'region' =>  $this->input->post('region'),
-		'DNS' =>  $this->input->post('DNS'),
-	);
-	$create = $this->Model_user->update_user_bay_id($this->input->post('id',true),$data);
-	if($create)
-	{
-		$res = array
-		(
-			'erorer' => false,
-			'msg' => "Modification Du Profile avec succès"
-		);
-		$this->response($res, REST_Controller::HTTP_NOT_FOUND);
-	}
-	else
-	{
-		$res= array(
-			'erorer' => true,
-			'msg' =>"Modification Du Profile n'a pas réussi"
-		);
-		$this->response($res, REST_Controller::HTTP_NOT_FOUND);
-	}
-}
-	public function update_hauffeur_post()
+	public function update_chauffeur_post()
 	{
 		$password = $this->password_hash($this->input->post('password'));
 		$data = array(
@@ -127,11 +105,12 @@ class Chauffeur extends REST_Controller
 			'email' =>  $this->input->post('email'),
 			'region' =>  $this->input->post('region'),
 			'DNS' =>  $this->input->post('DNS'),
-			'type' =>  $this->input->post('type'),
+			'type' =>  "chauffeur",
 		);
 
-		$create = $this->Model_user->update_user_bay_id($this->input->post('id',true),$data);
-		if($create)
+		$id=$this->input->post('id',true);
+		$update = $this->Model_generale->update_fn_bay_id($id,$data,"chauffeur","id_chauffeur");
+		if($update)
 		{
 			$res = array
 			(

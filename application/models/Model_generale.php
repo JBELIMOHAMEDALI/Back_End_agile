@@ -8,7 +8,7 @@ class Model_generale extends CI_Model
 	}
 	public function reset_passwored($matrcule,$newpass,$nomtab,$email)
 	{
-		$sql="UPDATE ".$nomtab." SET ".$nomtab.".password= '".$newpass."' WHERE matricule ='".$matrcule."' and ".$nomtab.".email = ".$email;
+		$sql="UPDATE ".$nomtab." SET password= '".$newpass."' WHERE matricule ='".$matrcule."' and email = '".$email."'";
 		$query = $this->db->query($sql);
 		if ($this->db->affected_rows() > 0) {
 			return true;
@@ -98,14 +98,21 @@ class Model_generale extends CI_Model
 		$status = $this->db->insert($tabName, $data);
 		return($this->db->affected_rows() != 1) ? false : true;
 	}
-	public function update_user_bay_id($id,$nomId,$data,$tab)
+	public function update_fn_bay_id($id,$data,$tab,$nomId)
 	{
 		$this->db->where($nomId, $id);
-		$this->db->update($tab);
+		$this->db->update($tab,$data);
 		if ($this->db->affected_rows() > 0) {
 			return true;
 		} else {
 			return false;
 		}
 	}
+	public function active_desc_user($id,$statut,$tabname,$idname)
+	{
+		$this->db->where($idname,$id);
+		$this->db->set('statut',$statut,FALSE);
+		return $this->db->update($tabname);
+	}
+
 }

@@ -10,6 +10,13 @@ class Generale extends REST_Controller
 		Header('Access-Control-Allow-Headers: *'); //for allow any headers, insecure
 		Header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE'); //method allowed
 	}
+	public function password_hash($pass = '')
+	{
+		if($pass) {
+			$password = password_hash($pass, PASSWORD_DEFAULT);
+			return $password;
+		}
+	}
 	public function login_get()
 	{
 		$tabName=$this->input->get('tabname', TRUE);
@@ -239,5 +246,58 @@ class Generale extends REST_Controller
 			);
 			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 		}
+	}
+	public function active_compte_post(){
+		$id=$this->input->post('id',true);
+		$tabName=$this->input->get('tabname', TRUE);
+		$nomId=$this->input->get('nomId', TRUE);
+
+		$act=$this->Model_generale->active_desc_user($id,"1",$tabName,$nomId);
+		if($act)
+		{
+			$res = array
+			(
+				'erorer' => false,
+				'msg' => "Activation Du Compte Avec Succès"
+			);
+			$this->response($res, REST_Controller::HTTP_OK);
+		}
+		else
+		{
+			$res= array(
+				'erorer' => true,
+				'msg' =>"Activation N'a Pas Réussi "
+			);
+			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
+		}
+
+
+	}
+	public function desactive_compte_post()
+	{
+		$id=$this->input->post('id',true);
+		$tabName=$this->input->get('tabname', TRUE);
+		$nomId=$this->input->get('nomId', TRUE);
+
+		$act=$this->Model_generale->active_desc_user($id,"0",$tabName,$nomId);
+		if($act)
+		{
+			$res = array
+			(
+				'erorer' => false,
+				'msg' => "Activation Du Compte Avec Succès"
+			);
+			$this->response($res, REST_Controller::HTTP_OK);
+		}
+		else
+		{
+			$res= array(
+				'erorer' => true,
+				'msg' =>"Activation N'a Pas Réussi "
+			);
+			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
+		}
+
+
 	}
 }
