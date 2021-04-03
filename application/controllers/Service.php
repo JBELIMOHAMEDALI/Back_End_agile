@@ -37,7 +37,8 @@ class Service extends REST_Controller
 		);
 
 		$id=$this->input->post('id',true);
-		$update = $this->Model_generale->update_fn_bay_id($id,$data,"service","id_service");
+		$update = $this->Model_generale->update_fn_bay_id($id,$data,"service","id_service
+		");
 		if($update)
 		{
 			$res = array

@@ -114,5 +114,23 @@ class Model_generale extends CI_Model
 		$this->db->set('statut',$statut,FALSE);
 		return $this->db->update($tabname);
 	}
+	public function upadte_passwored_first_connection($id,$passwored,$tabname,$idname)
+	{
+		$sql="UPDATE ".$tabname." SET password= '".$passwored."' WHERE ".$idname."  = ".$id;
+		$query = $this->db->query($sql);
+		$statue2=$this->db->affected_rows() > 0 ;
+		if($statue2){
+		$this->db->where($idname,$id);
+		$this->db->set('first_connected',"1",FALSE);
+		$statue_first_con= $this->db->update($tabname);
+		if ($statue2 && $statue_first_con ) {
+			return true;
+		} else {
+			return false;
+		}
+		}else{
+			return false ;
+		}
+	}
 
 }

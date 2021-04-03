@@ -65,9 +65,9 @@ class Chauffeur extends REST_Controller
 }
 	public function update_chauffeur_Profile_post()
 	{
-		$password = $this->password_hash($this->input->post('password'));
+
 		$data = array(
-			'password' => $password,
+
 			'matricule' => $this->input->post('matricule'),
 			'nom_prnom' => $this->input->post('nom_prnom'),
 			'tel' => $this->input->post('tel'),
@@ -124,6 +124,29 @@ class Chauffeur extends REST_Controller
 			$res= array(
 				'erorer' => true,
 				'msg' =>"Modification Du Profile n'a pas réussi"
+			);
+			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
+		}
+	}
+	public function update_chauffeur_Passwored_post()
+	{
+		$id=$this->input->post('id',true);
+		$password = $this->password_hash($this->input->post('password'));
+		$update = $this->Model_generale->upadte_passwored_first_connection($id,$password,"chauffeur","id_chauffeur");
+		if($update)
+		{
+			$res = array
+			(
+				'erorer' => false,
+				'msg' => "Modification Du Mot de passe  avec succès"
+			);
+			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
+		}
+		else
+		{
+			$res= array(
+				'erorer' => true,
+				'msg' =>"Modification Du Mot de passe  n'a pas réussi"
 			);
 			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 		}
