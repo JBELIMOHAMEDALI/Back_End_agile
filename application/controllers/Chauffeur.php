@@ -22,8 +22,8 @@ class Chauffeur extends REST_Controller
 	}
 	public function add_chauffeur_post()
 {
-	$password = $this->password_hash($this->input->post('password'));
 	$matrecule=$this->input->post('matricule');
+	$password = $this->password_hash($matrecule);
 	$data = array(
 		'password' => $password,
 		'matricule' => $this->input->post('matricule'),
@@ -151,5 +151,6 @@ class Chauffeur extends REST_Controller
 			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 		}
 	}
+
 
 }
