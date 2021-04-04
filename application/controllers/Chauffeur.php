@@ -13,6 +13,9 @@ class Chauffeur extends REST_Controller
 		$this->load->model("Model_chauffeur");
 		$this->load->helper('url');
 	}
+	/*
+	 * cryptage du mot de passe
+	 * */
 	public function password_hash($pass = '')
 	{
 		if($pass) {
@@ -20,6 +23,9 @@ class Chauffeur extends REST_Controller
 			return $password;
 		}
 	}
+	/*
+	 * ajouter une choufeure dans la bd
+	 * */
 	public function add_chauffeur_post()
 {
 	$matrecule=$this->input->post('matricule');
@@ -63,6 +69,9 @@ class Chauffeur extends REST_Controller
 		$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 	}
 }
+	/*
+	 * modife les info du choufeure pour une choufeur
+	 * */
 	public function update_chauffeur_Profile_post()
 	{
 
@@ -94,6 +103,9 @@ class Chauffeur extends REST_Controller
 			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 		}
 	}
+	/*
+	 * modifer une chouffeur => tt les donne pour cheffe service
+	 * */
 	public function update_chauffeur_post()
 	{
 		$password = $this->password_hash($this->input->post('password'));
@@ -128,29 +140,38 @@ class Chauffeur extends REST_Controller
 			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 		}
 	}
-	public function update_chauffeur_Passwored_post()
+	/*
+	 * consulte mes mestion selon l'etat du mission
+	 * 0=>en attente
+	 * 1=>en cour
+	 * 2=>don
+	 * */
+	public function get_Mes_Mission_for_one_choufeur_get()
 	{
-		$id=$this->input->post('id',true);
-		$password = $this->password_hash($this->input->post('password'));
-		$update = $this->Model_generale->upadte_passwored_first_connection($id,$password,"chauffeur","id_chauffeur");
-		if($update)
+		$etat=$this->input->get('etat', TRUE);//etat du mission
+		$id=$this->input->get('id', TRUE);//id_choufeure
+		$data = $this->Model_chauffeur->get_mes_affectation($id,$etat);
+		$total = count($data);
+		if($total != 0 )
 		{
 			$res = array
 			(
 				'erorer' => false,
-				'msg' => "Modification Du Mot de passe  avec succès"
+				'msg' => $data
+
 			);
-			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
+			$this->response($res, REST_Controller::HTTP_OK);
 		}
 		else
 		{
 			$res= array(
 				'erorer' => true,
-				'msg' =>"Modification Du Mot de passe  n'a pas réussi"
+				'msg' =>"Pas Des Donne "
 			);
+
 			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
+
 		}
+
 	}
-
-
 }

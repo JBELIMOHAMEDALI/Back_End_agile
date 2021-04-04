@@ -285,7 +285,7 @@ class Generale extends REST_Controller
 			$res = array
 			(
 				'erorer' => false,
-				'msg' => "Activation Du Compte Avec Succès"
+				'msg' => "Desactivation  Du Compte Avec Succès"
 			);
 			$this->response($res, REST_Controller::HTTP_OK);
 		}
@@ -293,11 +293,36 @@ class Generale extends REST_Controller
 		{
 			$res= array(
 				'erorer' => true,
-				'msg' =>"Activation N'a Pas Réussi "
+				'msg' =>"desactivation du compte  N'a Pas Réussi "
 			);
 			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 		}
 
 
+	}
+	public function update_all_Passwored_post()
+	{
+		$id=$this->input->post('id',true);
+		$idname=$this->input->post('nomId',true);
+		$tabname=$this->input->post('tabname',true);
+		$password = $this->password_hash($this->input->post('password'));
+		$update = $this->Model_generale->upadte_passwored_first_connection($id,$password,$tabname,$idname);
+		if($update)
+		{
+			$res = array
+			(
+				'erorer' => false,
+				'msg' => "Modification Du Mot de passe  avec succès"
+			);
+			$this->response($res, REST_Controller::HTTP_OK);
+		}
+		else
+		{
+			$res= array(
+				'erorer' => true,
+				'msg' =>"Modification Du Mot de passe  n'a pas réussi"
+			);
+			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
+		}
 	}
 }

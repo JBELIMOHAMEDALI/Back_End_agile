@@ -12,6 +12,9 @@ class Voiture extends REST_Controller
 		$this->load->model("Model_voiture");
 		$this->load->helper('url');
 	}
+	/*
+	 *   add car in db
+	 * */
 	public function add_voiture_post()
 	{
 		$data = array(
@@ -19,7 +22,7 @@ class Voiture extends REST_Controller
 			'type' => $this->input->post('type'),
 			'dmc' => $this->input->post('dmc'),
 			'puissance' => $this->input->post('puissance'),
-			'id_service' =>$this->input->post('id_service')
+			'servion' =>$this->input->post('servion')
 		);
 			$create = $this->Model_generale->add_fn($data,"voiture");
 			if($create)
@@ -42,6 +45,9 @@ class Voiture extends REST_Controller
 
 
 	}
+	/*
+	 * update car in db
+	 * */
 	public function update_voiture_post()
 	{
 		$data = array(
@@ -49,7 +55,7 @@ class Voiture extends REST_Controller
 			'type' => $this->input->post('type'),
 			'dmc' => $this->input->post('dmc'),
 			'puissance' => $this->input->post('puissance'),
-			'id_service' =>$this->input->post('id_service')
+			'servion' =>$this->input->post('servion')
 		);
 		$id=$this->input->post('id',true);
 		$update = $this->Model_generale->update_fn_bay_id($id,$data,"voiture","id_voiture");
@@ -71,4 +77,60 @@ class Voiture extends REST_Controller
 			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 		}
 	}
+	/*
+	 * get all car not affected to chouffeur
+	 * */
+	public function get_voitur_non_affecte_get()
+	{
+		$data = $this->Model_voiture->get_voiture_non_affecte();
+		$total = count($data);
+		if($total != 0 )
+		{
+			$res = array
+			(
+				'erorer' => false,
+				'msg' => $data
+
+			);
+			$this->response($res, REST_Controller::HTTP_OK);
+		}
+		else
+		{
+			$res= array(
+				'erorer' => true,
+				'msg' =>"Pas Des Donne "
+			);
+			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
+		}
+	}
+	/*
+	 * get car bay chouffeur
+	 */
+	public function get_voitur_bay_chouffeur_get()
+	{
+		$id_chpuffeur=$this->input->get('id', TRUE);
+		$data = $this->Model_voiture->get_voiture_bay_chouffeur($id_chpuffeur);
+		$total = count($data);
+		if($total != 0 )
+		{
+			$res = array
+			(
+				'erorer' => false,
+				'msg' => $data
+
+			);
+			$this->response($res, REST_Controller::HTTP_OK);
+		}
+		else
+		{
+			$res= array(
+				'erorer' => true,
+				'msg' =>"Pas Des Donne "
+			);
+			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
+		}
+	}
+
+
+
 }
