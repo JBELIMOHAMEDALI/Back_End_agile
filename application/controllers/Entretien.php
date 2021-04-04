@@ -32,7 +32,7 @@ class Entretien extends REST_Controller
 		}
 
 	}
-	public function update_entretien_post()
+	/*public function update_entretien_post()
 	{
 		$data = array(
 			'id_voiture' => $this->input->post('id_voiture'),
@@ -59,5 +59,5 @@ class Entretien extends REST_Controller
 			);
 			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 		}
-	}
+	}*/
 }

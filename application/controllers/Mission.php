@@ -12,7 +12,7 @@ class Mission extends REST_Controller
 		$this->load->model("Model_mission");
 	}
 	/*
-	 * Add car in mission
+	 * Add mission in db
 	 * */
 	public function add_mission_post()
 	{
@@ -46,7 +46,7 @@ class Mission extends REST_Controller
 		{
 			$res= array(
 				'erorer' => true,
-				'msg' =>"Inscription n'a pas réussi"
+				'msg' =>"Ajouté n'a pas réussi"
 			);
 			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 		}
@@ -102,12 +102,11 @@ class Mission extends REST_Controller
 	{
 		$id= $this->input->post('id');
 		$data=$this->Model_mission->get_date_debut($id);
-
+//date avec heur
 		$date_deb=date_create($data[0]->date_debut);
 		$date_fn=date_create(date("Y-m-d"));
 		$diff=date_diff($date_deb,$date_fn);
 		$d= $diff->format("%a");
-		echo $d;
 		$update = $this->Model_mission->don_fn($id,$d);
 		if($update)
 		{
