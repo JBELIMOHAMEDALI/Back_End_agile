@@ -33,11 +33,11 @@ class Chauffeur extends REST_Controller
 	$data = array(
 		'password' => $password,
 		'matricule' => $this->input->post('matricule'),
-		'nomPrenom' => $this->input->post('nom_prnom'),
+		'nomPrenom' => $this->input->post('nomPrenom'),
 		'tel' => $this->input->post('tel'),
 		'email' =>  $this->input->post('email'),
 		'region' =>  $this->input->post('region'),
-		'DNS' =>  $this->input->post('DNS'),
+		'dns' =>  $this->input->post('dns'),
 	);
 
 	if($this->Model_generale->check_matrecule($matrecule,"matricule","chauffeur")===true){
@@ -78,10 +78,10 @@ class Chauffeur extends REST_Controller
 		$data = array(
 
 			'matricule' => $this->input->post('matricule'),
-			'nom_prnom' => $this->input->post('nom_prnom'),
+			'nom_prnom' => $this->input->post('nomPrenom'),
 			'tel' => $this->input->post('tel'),
 			'region' =>  $this->input->post('region'),
-			'DNS' =>  $this->input->post('DNS'),
+			'dns' =>  $this->input->post('dns'),
 		);
 		$id=$this->input->post('id',true);
 		$update = $this->Model_generale->update_fn_bay_id($id,$data,"chauffeur","id_chauffeur");
@@ -108,16 +108,18 @@ class Chauffeur extends REST_Controller
 	 * */
 	public function update_chauffeur_post()
 	{
-		$password = $this->password_hash($this->input->post('password'));
+		// $password = $this->password_hash($this->input->post('password'));
 		$data = array(
-			'password' => $password,
+			// 'password' => $password,
 			'matricule' => $this->input->post('matricule'),
-			'nomPrenom' => $this->input->post('nom_prnom'),
+			'nomPrenom' => $this->input->post('nomPrenom'),
 			'tel' => $this->input->post('tel'),
 			'email' =>  $this->input->post('email'),
 			'region' =>  $this->input->post('region'),
-			'DNS' =>  $this->input->post('DNS'),
+			'dns' =>  $this->input->post('dns'),
 			'type' =>  "chauffeur",
+			// 'statut' => $this->input->post('statut'),
+
 		);
 
 		$id=$this->input->post('id',true);

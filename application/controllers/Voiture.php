@@ -22,28 +22,22 @@ class Voiture extends REST_Controller
 			'type' => $this->input->post('type'),
 			'dmc' => $this->input->post('dmc'),
 			'puissance' => $this->input->post('puissance'),
-			'servion' =>$this->input->post('servion')
+			'service' => $this->input->post('service')
 		);
-			$create = $this->Model_generale->add_fn($data,"voiture");
-			if($create)
-			{
-				$res = array
-				(
-					'erorer' => false,
-					'msg' => "Ajouté avec success"
-				);
-				$this->response($res, REST_Controller::HTTP_OK);
-			}
-			else
-			{
-				$res= array(
-					'erorer' => true,
-					'msg' =>"Inscription n'a pas réussi"
-				);
-				$this->response($res, REST_Controller::HTTP_NOT_FOUND);
-			}
-
-
+		$create = $this->Model_generale->add_fn($data, "voiture");
+		if ($create) {
+			$res = array(
+				'erorer' => false,
+				'msg' => "Ajouté avec success"
+			);
+			$this->response($res, REST_Controller::HTTP_OK);
+		} else {
+			$res = array(
+				'erorer' => true,
+				'msg' => "Inscription n'a pas réussi"
+			);
+			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
+		}
 	}
 	/*
 	 * update car in db
@@ -55,24 +49,20 @@ class Voiture extends REST_Controller
 			'type' => $this->input->post('type'),
 			'dmc' => $this->input->post('dmc'),
 			'puissance' => $this->input->post('puissance'),
-			'servion' =>$this->input->post('servion')
+			'service' => $this->input->post('service')
 		);
-		$id=$this->input->post('id',true);
-		$update = $this->Model_generale->update_fn_bay_id($id,$data,"voiture","id_voiture");
-		if($update)
-		{
-			$res = array
-			(
+		$id = $this->input->post('id', true);
+		$update = $this->Model_generale->update_fn_bay_id($id, $data, "voiture", "id_voiture");
+		if ($update) {
+			$res = array(
 				'erorer' => false,
 				'msg' => "Modification avec succès"
 			);
 			$this->response($res, REST_Controller::HTTP_OK);
-		}
-		else
-		{
-			$res= array(
+		} else {
+			$res = array(
 				'erorer' => true,
-				'msg' =>"Modification n'a pas réussi"
+				'msg' => "Modification n'a pas réussi"
 			);
 			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 		}
@@ -84,21 +74,17 @@ class Voiture extends REST_Controller
 	{
 		$data = $this->Model_voiture->get_voiture_non_affecte();
 		$total = count($data);
-		if($total != 0 )
-		{
-			$res = array
-			(
+		if ($total != 0) {
+			$res = array(
 				'erorer' => false,
 				'msg' => $data
 
 			);
 			$this->response($res, REST_Controller::HTTP_OK);
-		}
-		else
-		{
-			$res= array(
+		} else {
+			$res = array(
 				'erorer' => true,
-				'msg' =>"Pas Des Donne "
+				'msg' => "Pas Des Donne "
 			);
 			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 		}
@@ -108,29 +94,22 @@ class Voiture extends REST_Controller
 	 */
 	public function get_voitur_bay_chouffeur_get()
 	{
-		$id_chpuffeur=$this->input->get('id', TRUE);
+		$id_chpuffeur = $this->input->get('id', TRUE);
 		$data = $this->Model_voiture->get_voiture_bay_chouffeur($id_chpuffeur);
 		$total = count($data);
-		if($total != 0 )
-		{
-			$res = array
-			(
+		if ($total != 0) {
+			$res = array(
 				'erorer' => false,
 				'msg' => $data
 
 			);
 			$this->response($res, REST_Controller::HTTP_OK);
-		}
-		else
-		{
-			$res= array(
+		} else {
+			$res = array(
 				'erorer' => true,
-				'msg' =>"Pas Des Donne "
+				'msg' => "Pas Des Donne "
 			);
 			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 		}
 	}
-
-
-
 }
