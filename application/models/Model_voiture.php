@@ -5,7 +5,7 @@ class Model_voiture extends CI_Model
 {
 	public function get_voiture_non_affecte()
 	{
-		$sql="select * from voiture WHERE voiture.id_voiture NOT IN (SELECT voiture.id_voiture from voiture join affecter_v_chauffeur on voiture.id_voiture=affecter_v_chauffeur.id_voiture)";
+		$sql="select * from voiture WHERE voiture.id_voiture NOT IN (SELECT voiture.id_voiture from voiture join affecter_v_chauffeur on voiture.id_voiture=affecter_v_chauffeur.id_voiture) and voiture.statut=1";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}

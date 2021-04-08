@@ -18,7 +18,7 @@ class Chauffeur extends REST_Controller
 	 * */
 	public function password_hash($pass = '')
 	{
-		if($pass) {
+		if ($pass) {
 			$password = password_hash($pass, PASSWORD_DEFAULT);
 			return $password;
 		}
@@ -27,48 +27,42 @@ class Chauffeur extends REST_Controller
 	 * ajouter une choufeure dans la bd
 	 * */
 	public function add_chauffeur_post()
-{
-	$matrecule=$this->input->post('matricule');
-	$password = $this->password_hash($matrecule);
-	$data = array(
-		'password' => $password,
-		'matricule' => $this->input->post('matricule'),
-		'nomPrenom' => $this->input->post('nomPrenom'),
-		'tel' => $this->input->post('tel'),
-		'email' =>  $this->input->post('email'),
-		'region' =>  $this->input->post('region'),
-		'dns' =>  $this->input->post('dns'),
-	);
+	{
+		$matrecule = $this->input->post('matricule');
+		$password = $this->password_hash($matrecule);
+		$data = array(
+			'password' => $password,
+			'matricule' => $this->input->post('matricule'),
+			'nomPrenom' => $this->input->post('nomPrenom'),
+			'tel' => $this->input->post('tel'),
+			'email' =>  $this->input->post('email'),
+			'region' =>  $this->input->post('region'),
+			'dns' =>  $this->input->post('dns'),
+		);
 
-	if($this->Model_generale->check_matrecule($matrecule,"matricule","chauffeur")===true){
-		$create = $this->Model_generale->add_fn($data,"chauffeur");
-		if($create)
-		{
-			$res = array
-			(
-				'erorer' => false,
-				'msg' => "chauffeur Ajouté avec succès"
-			);
-			$this->response($res, REST_Controller::HTTP_OK);
-		}
-		else
-		{
-			$res= array(
+		if ($this->Model_generale->check_matrecule($matrecule, "matricule", "chauffeur") === true) {
+			$create = $this->Model_generale->add_fn($data, "chauffeur");
+			if ($create) {
+				$res = array(
+					'erorer' => false,
+					'msg' => "chauffeur Ajouté avec succès"
+				);
+				$this->response($res, REST_Controller::HTTP_OK);
+			} else {
+				$res = array(
+					'erorer' => true,
+					'msg' => "Ajouté d'un chauffeur n'a pas réussi"
+				);
+				$this->response($res, REST_Controller::HTTP_NOT_FOUND);
+			}
+		} else {
+			$res = array(
 				'erorer' => true,
-				'msg' =>"Ajouté d'un chauffeur n'a pas réussi"
+				'msg' => "Matricule Existe Déjà "
 			);
 			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 		}
 	}
-	else
-	{
-		$res= array(
-			'erorer' => true,
-			'msg' =>"Matricule Existe Déjà "
-		);
-		$this->response($res, REST_Controller::HTTP_NOT_FOUND);
-	}
-}
 	/*
 	 * modife les info du choufeure pour une choufeur
 	 * */
@@ -83,22 +77,18 @@ class Chauffeur extends REST_Controller
 			'region' =>  $this->input->post('region'),
 			'dns' =>  $this->input->post('dns'),
 		);
-		$id=$this->input->post('id',true);
-		$update = $this->Model_generale->update_fn_bay_id($id,$data,"chauffeur","id_chauffeur");
-		if($update)
-		{
-			$res = array
-			(
+		$id = $this->input->post('id', true);
+		$update = $this->Model_generale->update_fn_bay_id($id, $data, "chauffeur", "id_chauffeur");
+		if ($update) {
+			$res = array(
 				'erorer' => false,
 				'msg' => "Modification Du Profile avec succès"
 			);
 			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
-		}
-		else
-		{
-			$res= array(
+		} else {
+			$res = array(
 				'erorer' => true,
-				'msg' =>"Modification Du Profile n'a pas réussi"
+				'msg' => "Modification Du Profile n'a pas réussi"
 			);
 			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 		}
@@ -122,22 +112,18 @@ class Chauffeur extends REST_Controller
 
 		);
 
-		$id=$this->input->post('id',true);
-		$update = $this->Model_generale->update_fn_bay_id($id,$data,"chauffeur","id_chauffeur");
-		if($update)
-		{
-			$res = array
-			(
+		$id = $this->input->post('id', true);
+		$update = $this->Model_generale->update_fn_bay_id($id, $data, "chauffeur", "id_chauffeur");
+		if ($update) {
+			$res = array(
 				'erorer' => false,
 				'msg' => "Modification Du Profile avec succès"
 			);
 			$this->response($res, REST_Controller::HTTP_OK);
-		}
-		else
-		{
-			$res= array(
+		} else {
+			$res = array(
 				'erorer' => true,
-				'msg' =>"Modification Du Profile n'a pas réussi"
+				'msg' => "Modification Du Profile n'a pas réussi"
 			);
 			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 		}
@@ -150,30 +136,44 @@ class Chauffeur extends REST_Controller
 	 * */
 	public function get_Mes_Mission_for_one_choufeur_get()
 	{
-		$etat=$this->input->get('etat', TRUE);//etat du mission
-		$id=$this->input->get('id', TRUE);//id_choufeure
-		$data = $this->Model_chauffeur->get_mes_affectation($id,$etat);
+		$etat = $this->input->get('etat', TRUE); //etat du mission
+		$id = $this->input->get('id', TRUE); //id_choufeure
+		$data = $this->Model_chauffeur->get_mes_affectation($id, $etat);
 		$total = count($data);
-		if($total != 0 )
-		{
-			$res = array
-			(
+		if ($total != 0) {
+			$res = array(
 				'erorer' => false,
 				'msg' => $data
 
 			);
 			$this->response($res, REST_Controller::HTTP_OK);
-		}
-		else
-		{
-			$res= array(
+		} else {
+			$res = array(
 				'erorer' => true,
-				'msg' =>"Pas Des Donne "
+				'msg' => "Pas Des Donne "
 			);
 
 			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
-
 		}
+	}
 
+	public function get_chouffeur_non_affecte_voture_get()
+	{
+		$data = $this->Model_chauffeur->get_choufeur_son_voture();
+		$total = count($data);
+		if ($total != 0) {
+			$res = array(
+				'erorer' => false,
+				'msg' => $data
+
+			);
+			$this->response($res, REST_Controller::HTTP_OK);
+		} else {
+			$res = array(
+				'erorer' => true,
+				'msg' => "Pas Des Donne "
+			);
+			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
+		}
 	}
 }
