@@ -61,7 +61,7 @@ class Affecter_v_chauffeur extends REST_Controller
 		$data = array(
 			'id_voiture' => $this->input->post('id_voiture'),
 			'id_chauffeur' => $this->input->post('id_chauffeur'),
-			'date_affectation' => date('Y-m-d')
+			'date_maj' => date('Y-m-d')
 		);
 
 		$id = $this->input->post('id', true);
