@@ -157,7 +157,7 @@ class Chauffeur extends REST_Controller
 		}
 	}
 
-	public function get_chouffeur_non_affecte_voture_get()
+	public function get_chouffeur_non_affecte_voture_get() //--
 	{
 		$data = $this->Model_chauffeur->get_choufeur_son_voture();
 		$total = count($data);

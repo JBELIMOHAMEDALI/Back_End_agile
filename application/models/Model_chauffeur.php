@@ -12,7 +12,9 @@ class Model_chauffeur extends CI_Model
 
 	public function get_choufeur_son_voture()
 	{
-		$sql = "select * from chauffeur WHERE chauffeur.id_chauffeur NOT IN (SELECT chauffeur.id_chauffeur from chauffeur join affecter_v_chauffeur on chauffeur.id_chauffeur=affecter_v_chauffeur.id_chauffeur) and chauffeur.statut=1";
+		$sql = "select * from chauffeur WHERE chauffeur.id_chauffeur NOT IN 
+		(SELECT chauffeur.id_chauffeur from chauffeur join affecter_v_chauffeur 
+		on chauffeur.id_chauffeur=affecter_v_chauffeur.id_chauffeur where affecter_v_chauffeur.statut=1) and chauffeur.statut=1";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}

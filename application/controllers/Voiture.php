@@ -70,7 +70,7 @@ class Voiture extends REST_Controller
 	/*
 	 * get all car not affected to chouffeur
 	 * */
-	public function get_voitur_non_affecte_get()
+	public function get_voitur_non_affecte_get() //--
 	{
 		$data = $this->Model_voiture->get_voiture_non_affecte();
 		$total = count($data);
