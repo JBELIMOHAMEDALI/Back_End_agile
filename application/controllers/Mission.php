@@ -100,14 +100,15 @@ class Mission extends REST_Controller
 	 */
 	public function don_fonction_post()
 	{
+		
+		// $data=$this->Model_mission->get_date_debut($id);
+		//date avec heur
+		// $date_deb=date_create($data[0]->date_debut);
+		// $date_fn=date_create(date("Y-m-d"));
+		// $diff=date_diff($date_deb,$date_fn);
+		// $d= $diff->format("%a");
 		$id= $this->input->post('id');
-		$data=$this->Model_mission->get_date_debut($id);
-//date avec heur
-		$date_deb=date_create($data[0]->date_debut);
-		$date_fn=date_create(date("Y-m-d"));
-		$diff=date_diff($date_deb,$date_fn);
-		$d= $diff->format("%a");
-		$update = $this->Model_mission->don_fn($id,$d);
+		$update = $this->Model_mission->don_fn($id);
 		if($update)
 		{
 			$res = array
