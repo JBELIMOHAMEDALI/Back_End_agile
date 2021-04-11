@@ -136,9 +136,11 @@ class Chauffeur extends REST_Controller
 	 * */
 	public function get_Mes_Mission_for_one_choufeur_get()
 	{
-		$etat = $this->input->get('etat', TRUE); //etat du mission
+		 $etat = $this->input->get('etat', TRUE); //etat du mission
 		$id = $this->input->get('id', TRUE); //id_choufeure
-		$data = $this->Model_chauffeur->get_mes_affectation($id, $etat);
+		$stat = $this->input->get('statu', TRUE); //id_choufeure
+
+		$data = $this->Model_chauffeur->get_mes_affectation($id, $stat,$etat);
 		$total = count($data);
 		if ($total != 0) {
 			$res = array(

@@ -3,9 +3,9 @@
 
 class Model_chauffeur extends CI_Model
 {
-	public function get_mes_affectation($id, $type)
+	public function get_mes_affectation($id, $statu,$eta)
 	{
-		$sql = "select * from chauffeur c join mission m on c.id_chauffeur=m.id_chauffeur WHERE c.id_chauffeur= " . $id . " and m.etat =" . $type;
+		$sql = "SELECT * from mission m join voiture v join chauffeur c on v.id_voiture=m.id_voiture and m.id_chauffeur=c.id_chauffeur where c.id_chauffeur=".$id." and c.statut = '".$statu."' and m.etat= ".$eta;
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
