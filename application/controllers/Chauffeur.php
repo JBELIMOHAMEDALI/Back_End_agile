@@ -178,4 +178,28 @@ class Chauffeur extends REST_Controller
 			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 		}
 	}
+
+	public function get_One_Mission_for_one_choufeur_get()
+	{
+
+		$id = $this->input->get('id', TRUE); //id_choufeure
+
+		$data = $this->Model_chauffeur->get_one_mes_affectation($id);
+		$total = count($data);
+		if ($total != 0) {
+			$res = array(
+				'erorer' => false,
+				'msg' => $data
+
+			);
+			$this->response($res, REST_Controller::HTTP_OK);
+		} else {
+			$res = array(
+				'erorer' => true,
+				'msg' => "Pas Des Donne "
+			);
+
+			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
+		}
+	}
 }
