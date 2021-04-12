@@ -13,6 +13,7 @@ class Modele_carnet_bord extends CI_Model
 			$this->db->select("*");
 			$this->db->from("carnet_bord");
 			$this->db->where("id_choufer",$id);
+			$this->db->order_by("date", "desc");
 		$query=$this->db->get();
 		return $resulta = $query->result_array();
 	}

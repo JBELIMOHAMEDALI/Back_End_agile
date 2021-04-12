@@ -20,7 +20,7 @@ class Carnet_bord extends REST_Controller
 		$data = array(
 			'klm' => $this->input->post('klm'),
 			'consomation' => $this->input->post('consomation'),
-			'date' =>  date('Y-m-d'),
+			'date' =>  date("Y-m-d H:i:s"),
 			'id_choufer' =>  $this->input->post('id_choufer'),
 		);
 			$create = $this->Model_generale->add_fn($data,"carnet_bord");

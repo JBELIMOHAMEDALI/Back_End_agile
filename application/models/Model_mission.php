@@ -5,9 +5,13 @@ class Model_mission extends CI_Model
 {
 	public function don_fn($id)
 	{
-		$this->db->where("id_mission ",$id);
-		$this->db->set('etat',"1",FALSE);
-		return $this->db->update('mission');
+
+		$date=date("Y-m-d H:i:s");
+		$d=strval(date("Y-m-d H:i:s"));
+		$sql="UPDATE mission SET etat=1 , date_fin_real= '".$d."'  WHERE id_mission = ".$id;
+		$query = $this->db->query($sql);
+		return $this->db->affected_rows() > 0 ;
+		
 	}
 	public function get_date_debut($id)
 	{
