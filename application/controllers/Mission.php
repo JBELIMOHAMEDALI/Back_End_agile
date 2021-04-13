@@ -65,7 +65,6 @@ class Mission extends REST_Controller
 		$data = array(
 			'id_chefService' => $this->input->post('id_chefService'),
 			'id_chauffeur' => $this->input->post('id_chauffeur'),
-			'id_voiture ' => $this->input->post('id_voiture'),
 			'date_debut' => $this->input->post('date_debut'),
 			'description' => $this->input->post('description'),
 			'date_fin' => $this->input->post('date_fin'),

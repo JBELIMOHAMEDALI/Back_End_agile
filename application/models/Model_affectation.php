@@ -20,5 +20,13 @@ class Model_affectation extends CI_Model
 		$query = $this->db->query($sql);
 		return $query->result_array();
 
+	}//
+
+	public function get_All_choufeur_for_mession()
+	{
+		$sql="SELECT c.* FROM chauffeur c JOIN affecter_v_chauffeur af on af.id_chauffeur = c.id_chauffeur WHERE c.statut = 1";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+
 	}
 }

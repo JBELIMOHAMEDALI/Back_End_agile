@@ -202,4 +202,26 @@ class Chauffeur extends REST_Controller
 			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 		}
 	}
+
+	public function get_chouffeur_for_mession_get()
+	{
+		$data = $this->Model_chauffeur->get_All_choufeur_for_mession();
+		$total = count($data);
+		if ($total != 0) {
+			$res = array(
+				'erorer' => false,
+				'msg' => $data
+
+			);
+			$this->response($res, REST_Controller::HTTP_OK);
+		} else {
+			$res = array(
+				'erorer' => true,
+				'msg' => "Pas Des Donne "
+			);
+
+			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
+		}
+	}
+	//
 }
