@@ -21,7 +21,7 @@ class Model_mission extends CI_Model
 
 	public function get_mession_info()
 	{
-		$sql = "select c.nomPrenom,v.type,v.matricule,m.* from chauffeur c 
+		$sql = "select c.nomPrenom,c.matricule as matriculeChauffeur,v.type,v.matricule,m.* from chauffeur c 
 		join voiture v join mission m on m.id_chauffeur=c.id_chauffeur and m.id_voiture=v.id_voiture";
 		$query = $this->db->query($sql);
 		return $query->result_array();
