@@ -16,6 +16,6 @@ class Model_voiture extends CI_Model
 	{
 		$sql = "select v.* from voiture v join affecter_v_chauffeur afv join chauffeur c on v.id_voiture=afv.id_voiture and afv.id_chauffeur=c.id_chauffeur and c.id_chauffeur =" . $id;
 		$query = $this->db->query($sql);
-		return $query->result_array();
+		return $query->result();
 	}
 }

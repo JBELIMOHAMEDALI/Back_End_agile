@@ -10,6 +10,8 @@ class Mission extends REST_Controller
 		Header('Access-Control-Allow-Headers: *'); //for allow any headers, insecure
 		Header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE'); //method allowed
 		$this->load->model("Model_mission");
+		$this->load->model("Model_voiture");
+
 	}
 	/*
 	 * Add mission in db
@@ -22,11 +24,12 @@ class Mission extends REST_Controller
 		$date2 = date_create($date_fin);
 		$diff = date_diff($date1, $date2);
 		$d = $diff->format("%a");
-
+		$voiture=$this->Model_voiture->get_voiture_bay_chouffeur($this->input->post('id_chauffeur'));
+		$id_voiture=$voiture[0]->id_voiture;
 		$data = array(
 			'id_chefService' => $this->input->post('id_chefService'),
 			'id_chauffeur' => $this->input->post('id_chauffeur'),
-			'id_voiture ' => $this->input->post('id_voiture'),
+			'id_voiture ' => $id_voiture,
 			'date_debut' => $this->input->post('date_debut'),
 			'description' => $this->input->post('description'),
 			'date_fin' => $this->input->post('date_fin'),
