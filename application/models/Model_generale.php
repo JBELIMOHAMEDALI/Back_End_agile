@@ -8,7 +8,7 @@ class Model_generale extends CI_Model
 	}
 	public function reset_passwored($matrcule,$newpass,$nomtab,$email)
 	{
-		$sql="UPDATE ".$nomtab." SET password= '".$newpass."' WHERE matricule ='".$matrcule."' and email = '".$email."'";
+		$sql="UPDATE ".$nomtab." SET password= '".$newpass."' WHERE matricule ='".$matrcule."' and email = '".$email."' and statut=1";
 		$query = $this->db->query($sql);
 		if ($this->db->affected_rows() > 0) {
 			return true;
