@@ -58,4 +58,12 @@ class Model_chart extends CI_Model
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
+	public function get_data_for_mes_chartes($moi,$anne,$id_chouffeur)
+	{
+		$dateDebut=$anne."-".$moi."-01";
+		$dateEnd=$anne."-".$moi."-31";
+		$sql="SELECT * FROM carnet_bord WHERE CAST(carnet_bord.date AS date) BETWEEN '".$dateDebut."' and '".$dateEnd."' and carnet_bord.id_choufer = ".$id_chouffeur;
+		$query = $this->db->query($sql);
+		return $query->result();
+	}
 }
