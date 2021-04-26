@@ -17,15 +17,15 @@ class Charet extends REST_Controller
 
         if ($data != 0) {
             $res = array(
-                'erorer' => false,
-                'msg' => $data
+                'err' => false,
+                'nbChauffeur' => $data
 
             );
             $this->response($res, REST_Controller::HTTP_OK);
         } else {
             $res = array(
-                'erorer' => false,
-                'msg' => "0"
+                'err' => false,
+                'nbChauffeur' => "0"
             );
 
             $this->response($res, REST_Controller::HTTP_OK);
@@ -37,15 +37,15 @@ class Charet extends REST_Controller
 
         if ($data != 0) {
             $res = array(
-                'erorer' => false,
-                'msg' => $data
+                'err' => false,
+                'nbVoitures' => $data
 
             );
             $this->response($res, REST_Controller::HTTP_OK);
         } else {
             $res = array(
-                'erorer' => false,
-                'msg' => "0"
+                'err' => false,
+                'nbVoitures' => "0"
             );
 
             $this->response($res, REST_Controller::HTTP_OK);
@@ -195,27 +195,27 @@ class Charet extends REST_Controller
     }
     //
 
-	public function get_data_for_mes_charet_get()
-	{
-		$mois = $this->input->get('mois');
-		$anne = $this->input->get('anne');
-		$id_chouffeur = $this->input->get('id_chouffeur');
-		$data = $this->Model_chart->get_data_for_mes_chartes($mois,$anne,$id_chouffeur);
-		//var_dump($data);
-		if ($data != 0) {
-			$res = array(
-				'erorer' => false,
-				'msg' => $data
+    public function get_data_for_mes_charet_get()
+    {
+        $mois = $this->input->get('mois');
+        $anne = $this->input->get('anne');
+        $id_chouffeur = $this->input->get('id_chouffeur');
+        $data = $this->Model_chart->get_data_for_mes_chartes($mois, $anne, $id_chouffeur);
+        //var_dump($data);
+        if ($data != 0) {
+            $res = array(
+                'erorer' => false,
+                'msg' => $data
 
-			);
-			$this->response($res, REST_Controller::HTTP_OK);
-		} else {
-			$res = array(
-				'erorer' => true,
-				'msg' => "pas de donne"
-			);
+            );
+            $this->response($res, REST_Controller::HTTP_OK);
+        } else {
+            $res = array(
+                'erorer' => true,
+                'msg' => "pas de donne"
+            );
 
-			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
-		}
-	}
+            $this->response($res, REST_Controller::HTTP_NOT_FOUND);
+        }
+    }
 }

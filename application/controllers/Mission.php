@@ -51,7 +51,7 @@ class Mission extends REST_Controller
 		}
 	}
 	/*
-	 * update mission in db
+	 * update mission in data base
 	 * */
 	public function update_mission_post()
 	{
