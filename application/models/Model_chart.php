@@ -33,7 +33,8 @@ class Model_chart extends CI_Model
 	public function get_tt_count_nomber_entritient_bay_yeares()
 	{
 		$year = date("Y");
-		$sql = "SELECT COUNT(id_entretien) as nombre_entrint FROM entretien WHERE entretien.date LIKE '%" . $year . "'";
+		var_dump($year);
+		$sql = "SELECT COUNT(id_entretien) as nombre_entrint FROM entretien WHERE entretien.date LIKE '" . $year . "%'";
 		$query = $this->db->query($sql);
 		return $this->db->count_all_results();
 	}

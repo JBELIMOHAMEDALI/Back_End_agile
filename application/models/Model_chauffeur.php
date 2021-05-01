@@ -47,4 +47,11 @@ class Model_chauffeur extends CI_Model
 		$query = $this->db->get();
 		return $query->num_rows() == 1;
 	}
+	public function getchouffeur_on_voiture()
+	{
+		$sql="select c.* from chauffeur c join affecter_v_chauffeur a join voiture v
+		 on c.id_chauffeur=a.id_chauffeur and a.id_voiture=v.id_voiture WHERE a.statut = 1";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
 }

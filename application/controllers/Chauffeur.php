@@ -63,38 +63,6 @@ class Chauffeur extends REST_Controller
 			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
 		}
 	}
-	/*
-	 * modife les info du choufeure pour une choufeur
-	 * */
-	// public function update_chauffeur_Profile_post()
-	// {
-
-	// 	$data = array(
-
-	// 		'nom_prnom' => $this->input->post('nomPrenom'),
-	// 		'tel' => $this->input->post('tel'),
-	// 		'region' =>  $this->input->post('region'),
-	// 		'dns' =>  $this->input->post('dns'),
-	// 	);
-	// 	$id = $this->input->post('id', true);
-	// 	$update = $this->Model_generale->update_fn_bay_id($id, $data, "chauffeur", "id_chauffeur");
-	// 	if ($update) {
-	// 		$res = array(
-	// 			'erorer' => false,
-	// 			'msg' => "Modification Du Profile avec succès"
-	// 		);
-	// 		$this->response($res, REST_Controller::HTTP_NOT_FOUND);
-	// 	} else {
-	// 		$res = array(
-	// 			'erorer' => true,
-	// 			'msg' => "Modification Du Profile n'a pas réussi"
-	// 		);
-	// 		$this->response($res, REST_Controller::HTTP_NOT_FOUND);
-	// 	}
-	// }
-	/*
-	 * modifer une chouffeur => tt les donne pour cheffe service
-	 * */
 	public function update_chauffeur_chefService_profil_post()
 	{
 		$tabName = $this->input->post('tabName');
@@ -281,4 +249,24 @@ class Chauffeur extends REST_Controller
 		}
 	}
 	//
+	public function get_chouffeur_one_voiture_get()
+	{
+		$data = $this->Model_chauffeur->getchouffeur_on_voiture();
+		$total = count($data);
+		if ($total != 0) {
+			$res = array(
+				'erorer' => false,
+				'msg' => $data
+
+			);
+			$this->response($res, REST_Controller::HTTP_OK);
+		} else {
+			$res = array(
+				'erorer' => true,
+				'msg' => "Pas Des Donne "
+			);
+
+			$this->response($res, REST_Controller::HTTP_NOT_FOUND);
+		}
+	}
 }
